@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ahmed Massoud — Portfolio Site
 
-## Getting Started
+Personal portfolio for **Ahmed Reda Sayed Massoud** — Email Operations Manager & AI Automation Builder. Live at **[ahmedmassoud.co](https://ahmedmassoud.co)**.
 
-First, run the development server:
+## Concept
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+The site is built around an **"operations log"** idea: Ahmed's identity as an operator/systems-builder is expressed literally through the design — a hero styled as a live system log (timestamped status lines), and a numbered section index (`01 — About`, `02 — Stack`, ...) that doubles as page navigation.
+
+## Tech stack
+
+- **Next.js 16** (App Router) + **TypeScript**
+- **Tailwind CSS v4**
+- **Framer Motion** for scroll reveals
+- Fonts: **IBM Plex Sans**, **IBM Plex Sans Condensed**, **IBM Plex Mono**
+- Deployed on **Vercel**
+
+## Design system
+
+| Token | Value | Use |
+|---|---|---|
+| Console | `#171A18` | Dark base background |
+| Report | `#EFEAE0` | Warm paper inset panels |
+| Ink | `#1F1D1A` | Text on paper panels |
+| Paper | `#EDEBE6` | Text on dark background |
+| Signal | `#C9A227` | Gold accent |
+| Wire | `#5C7B75` | Muted sage-teal secondary accent |
+
+No border-radius anywhere in the content (sharp, technical register) — the favicon/logo mark (`>_`, a terminal prompt + cursor) follows the same flat, sharp-cornered language.
+
+## Project structure
+
+```
+src/
+  app/
+    layout.tsx          # Root layout, metadata, JSON-LD, fonts
+    page.tsx             # Assembles all sections
+    icon.svg              # Favicon (terminal ">_" mark)
+    opengraph-image.png   # Social share image
+    robots.ts / sitemap.ts
+  components/
+    Header.tsx           # Fixed nav + mobile menu
+    Hero.tsx              # Log-line intro + name/title
+    About.tsx
+    Skills.tsx            # "Stack" section
+    SelectedWork.tsx       # Flagship (MailPilot AI) + secondary projects
+    Experience.tsx
+    Services.tsx
+    Contact.tsx
+    Footer.tsx
+    SectionIndex.tsx        # Scroll-spy side rail (desktop)
+    Reveal.tsx                # Framer Motion scroll-in wrapper
+    ScreenshotPlaceholder.tsx # Figure frame for project screenshots
+  lib/
+    content.ts             # All copy/content lives here (single source of truth)
+public/
+  screenshots/              # Anonymized MailPilot AI product screenshots
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Content
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+All site copy — identity, hero text, about, skills, work history, services, contact — lives in a single typed file: [`src/lib/content.ts`](src/lib/content.ts). Edit that file to change any text on the site without touching component code.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Development
 
-## Learn More
+```bash
+npm install
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Pushes to `main` deploy automatically via Vercel. The production domain (`ahmedmassoud.co`) is registered separately and pointed at Vercel via DNS (`A` record → `76.76.21.21`, `CNAME www` → `cname.vercel-dns.com`).
 
-## Deploy on Vercel
+## SEO
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Global (non-geo-restricted) metadata: Open Graph, Twitter card, `Person` JSON-LD
+- `robots.ts` / `sitemap.ts` (Next.js file-convention routes)
+- Verified with Google Search Console
