@@ -24,9 +24,55 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const title = `${identity.name} — ${identity.title}`;
+
 export const metadata: Metadata = {
-  title: `${identity.name} — ${identity.title}`,
+  metadataBase: new URL(identity.siteUrl),
+  title: {
+    default: title,
+    template: `%s — ${identity.shortName}`,
+  },
   description: hero.subhead,
+  keywords: identity.keywords,
+  authors: [{ name: identity.name, url: identity.siteUrl }],
+  creator: identity.name,
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+    },
+  },
+  openGraph: {
+    type: "profile",
+    url: identity.siteUrl,
+    siteName: identity.shortName,
+    title,
+    description: hero.subhead,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description: hero.subhead,
+  },
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: identity.name,
+  alternateName: identity.shortName,
+  jobTitle: identity.title,
+  url: identity.siteUrl,
+  email: `mailto:${identity.email}`,
+  sameAs: [identity.linkedin],
+  knowsAbout: identity.keywords,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -35,7 +81,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${plexSans.variable} ${plexCondensed.variable} ${plexMono.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col bg-console text-paper">{children}</body>
+      <body className="min-h-full flex flex-col bg-console text-paper">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

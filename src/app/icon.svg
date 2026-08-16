@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="14" fill="#171a18"/>
-  <text
-    x="20"
-    y="45"
-    font-family="Arial, Helvetica, sans-serif"
-    font-weight="700"
-    font-size="34"
-    fill="#edebe6"
-  >A</text>
-  <rect x="42" y="38" width="8" height="8" fill="#c9a227"/>
+  <rect width="64" height="64" rx="3" fill="#171a18"/>
+  <polyline
+    points="15,13 32,25 15,37"
+    fill="none"
+    stroke="#c9a227"
+    stroke-width="7.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <rect x="15" y="45" width="17" height="6" fill="#c9a227"/>
 </svg>

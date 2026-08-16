@@ -28,9 +28,29 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6 lg:pl-24 lg:pr-10">
-        <a href="#top" className="font-display text-lg font-semibold tracking-tight text-paper">
-          {identity.mark}
-          <span className="text-signal">.</span>
+        <a href="#top" className="flex items-center gap-2">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 64 64"
+            aria-hidden="true"
+            className="shrink-0"
+          >
+            <polyline
+              points="15,13 32,25 15,37"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-signal"
+            />
+            <rect x="15" y="45" width="17" height="6" className="fill-signal" />
+          </svg>
+          <span className="font-display text-lg font-semibold tracking-tight text-paper">
+            {identity.mark}
+            <span className="text-signal">.</span>
+          </span>
         </a>
 
         <nav aria-label="Primary" className="hidden items-center gap-7 lg:flex">

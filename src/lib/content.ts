@@ -6,6 +6,19 @@ export const identity = {
   location: "UAE",
   email: "ahmedredamassoud@gmail.com",
   linkedin: "https://www.linkedin.com/in/ahmed-reda-476b0514b/",
+  siteUrl: "https://ahmedmassoud.co",
+  keywords: [
+    "Ahmed Reda Sayed Massoud",
+    "Ahmed Massoud",
+    "Email Operations Manager",
+    "AI Automation Builder",
+    "Email Marketing Operations",
+    "Email Deliverability Specialist",
+    "AI Automation Consultant",
+    "Business Operations Manager",
+    "Internal Tools Developer",
+    "MailPilot AI",
+  ],
 };
 
 export const nav = [
