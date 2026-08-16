@@ -204,3 +204,27 @@ body {
   text-decoration-color: var(--color-signal);
   text-underline-offset: 3px;
 }
+
+.prose-log-dark {
+  color: var(--color-paper);
+}
+
+.prose-log-dark p,
+.prose-log-dark ul,
+.prose-log-dark ol {
+  color: rgba(237, 235, 230, 0.75);
+}
+
+.prose-log-dark h2,
+.prose-log-dark h3,
+.prose-log-dark strong {
+  color: var(--color-paper);
+}
+
+.prose-log-dark a {
+  color: var(--color-paper);
+}
+
+.prose-log-dark code {
+  background: rgba(237, 235, 230, 0.1);
+}

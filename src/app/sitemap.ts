@@ -18,6 +18,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    {
+      url: `${identity.siteUrl}/gallery`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
     ...posts.map((post) => ({
       url: `${identity.siteUrl}/log/${post.slug}`,
       lastModified: new Date(post.date),

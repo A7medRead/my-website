@@ -40,6 +40,8 @@ src/
     log/
       page.tsx             # Log index (list of posts)
       [slug]/page.tsx        # Individual post, renders Markdown
+    gallery/
+      page.tsx               # Gallery grid + lightbox
   components/
     Header.tsx           # Fixed nav + mobile menu
     Hero.tsx              # Log-line intro + name/title
@@ -53,13 +55,16 @@ src/
     SectionIndex.tsx        # Scroll-spy side rail (desktop)
     Reveal.tsx                # Framer Motion scroll-in wrapper
     ScreenshotPlaceholder.tsx # Figure frame for project screenshots
+    GalleryLightbox.tsx       # Gallery grid + click-to-expand lightbox
   lib/
     content.ts             # All copy/content lives here (single source of truth)
     log.ts                 # Markdown loader for the Log
+    gallery.ts               # Markdown loader for the Gallery
 public/
   screenshots/              # Anonymized MailPilot AI product screenshots
 content/
   log/                       # Log posts (Markdown + frontmatter)
+  gallery/                    # Gallery items (Markdown + frontmatter)
 ```
 
 ## Content
@@ -81,6 +86,23 @@ tags: ["tag-one", "tag-two"]
 
 Post body in Markdown.
 ```
+
+### Adding a Gallery item
+
+Add a new `.md` file to `content/gallery/`, with the image already placed under `public/`:
+
+```md
+---
+title: "Screenshot title"
+image: "/screenshots/your-image.png"
+project: "Project name"
+order: 4
+---
+
+Description shown in the lightbox when the image is clicked. Markdown supported.
+```
+
+`order` controls where it sits in the grid (lower first).
 
 No build step or registration needed — new posts show up on `/log` and get their own static page automatically.
 
