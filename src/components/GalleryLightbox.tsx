@@ -71,77 +71,75 @@ export function GalleryLightbox({ items }: { items: GalleryItem[] }) {
           role="dialog"
           aria-modal="true"
           aria-label={active.title}
-          className="fixed inset-0 z-50 flex flex-col bg-console/97 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-console/90 p-4 backdrop-blur-sm sm:p-10"
           onClick={close}
         >
-          <button
-            type="button"
-            onClick={close}
-            aria-label="Close"
-            className="absolute right-6 top-6 z-10 font-mono-ui text-[0.75rem] tracking-[0.1em] text-paper/70 uppercase transition-colors hover:text-signal"
-          >
-            Close ✕
-          </button>
-
           <div
-            className="flex flex-1 flex-col items-center justify-center gap-6 overflow-y-auto px-6 py-20 sm:px-16"
+            className="flex max-h-full w-full max-w-[860px] flex-col border hairline-dark bg-console-2 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative aspect-[16/10] w-full max-w-[900px] shrink-0 border hairline-dark">
-              <Image
-                src={active.image}
-                alt={active.title}
-                fill
-                className="object-cover object-top"
-                sizes="900px"
-                priority
-              />
-            </div>
-
-            <div className="w-full max-w-[700px]">
-              <div className="flex items-baseline justify-between gap-4 border-t hairline-dark pt-4">
-                <h2 className="font-display text-xl font-semibold text-paper">
-                  {active.title}
-                </h2>
-                <span className="shrink-0 font-mono-ui text-[0.7rem] tracking-[0.08em] text-wire uppercase">
-                  {active.project}
-                </span>
-              </div>
-              <div className="prose-log prose-log-dark mt-4">
-                <ReactMarkdown>{active.description}</ReactMarkdown>
-              </div>
-            </div>
-          </div>
-
-          {items.length > 1 && (
-            <div className="absolute inset-x-0 bottom-8 flex items-center justify-center gap-8">
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  showPrev();
-                }}
-                aria-label="Previous"
-                className="font-mono-ui text-sm text-paper/60 transition-colors hover:text-signal"
-              >
-                ← Prev
-              </button>
-              <span className="font-mono-ui text-[0.7rem] text-paper/40">
-                {activeIndex! + 1} / {items.length}
+            <div className="flex shrink-0 items-center justify-between border-b hairline-dark px-5 py-4 sm:px-8">
+              <span className="font-mono-ui text-[0.7rem] tracking-[0.06em] text-paper/40">
+                {items.length > 1 ? `${activeIndex! + 1} / ${items.length}` : active.project}
               </span>
               <button
                 type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  showNext();
-                }}
-                aria-label="Next"
-                className="font-mono-ui text-sm text-paper/60 transition-colors hover:text-signal"
+                onClick={close}
+                aria-label="Close"
+                className="font-mono-ui text-[0.72rem] tracking-[0.1em] text-paper/70 uppercase transition-colors hover:text-signal"
               >
-                Next →
+                Close ✕
               </button>
             </div>
-          )}
+
+            <div className="overflow-y-auto px-5 py-6 sm:px-8 sm:py-8">
+              <div className="relative aspect-[16/10] w-full border hairline-dark bg-console">
+                <Image
+                  src={active.image}
+                  alt={active.title}
+                  fill
+                  className="object-cover object-top"
+                  sizes="860px"
+                  priority
+                />
+              </div>
+
+              <div className="mt-7">
+                <div className="flex items-baseline justify-between gap-4">
+                  <h2 className="font-display text-xl font-semibold text-paper">
+                    {active.title}
+                  </h2>
+                  <span className="shrink-0 font-mono-ui text-[0.7rem] tracking-[0.08em] text-wire uppercase">
+                    {active.project}
+                  </span>
+                </div>
+                <div className="prose-log prose-log-dark mt-4">
+                  <ReactMarkdown>{active.description}</ReactMarkdown>
+                </div>
+              </div>
+            </div>
+
+            {items.length > 1 && (
+              <div className="flex shrink-0 items-center justify-between border-t hairline-dark px-5 py-4 sm:px-8">
+                <button
+                  type="button"
+                  onClick={showPrev}
+                  aria-label="Previous"
+                  className="font-mono-ui text-[0.75rem] tracking-[0.06em] text-paper/60 uppercase transition-colors hover:text-signal"
+                >
+                  ← Prev
+                </button>
+                <button
+                  type="button"
+                  onClick={showNext}
+                  aria-label="Next"
+                  className="font-mono-ui text-[0.75rem] tracking-[0.06em] text-paper/60 uppercase transition-colors hover:text-signal"
+                >
+                  Next →
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </>
