@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# scratch screenshots, not part of the site
+/photors
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
