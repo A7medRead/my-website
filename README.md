@@ -11,6 +11,8 @@ The site is built around an **"operations log"** idea: Ahmed's identity as an op
 - **Next.js 16** (App Router) + **TypeScript**
 - **Tailwind CSS v4**
 - **Framer Motion** for scroll reveals
+- **gray-matter** + **react-markdown** (+ **remark-gfm**) for the Log and Gallery content
+- **Decap CMS** as the `/admin` content editor
 - Fonts: **IBM Plex Sans**, **IBM Plex Sans Condensed**, **IBM Plex Mono**
 - Deployed on **Vercel**
 
@@ -42,6 +44,9 @@ src/
       [slug]/page.tsx        # Individual post, renders Markdown
     gallery/
       page.tsx               # Gallery grid + lightbox
+    api/
+      auth/route.ts           # Decap CMS OAuth — starts the GitHub login
+      callback/route.ts       # Decap CMS OAuth — exchanges code for token
   components/
     Header.tsx           # Fixed nav + mobile menu
     Hero.tsx              # Log-line intro + name/title
@@ -62,6 +67,9 @@ src/
     gallery.ts               # Markdown loader for the Gallery
 public/
   screenshots/              # Anonymized MailPilot AI product screenshots
+  admin/
+    index.html                # Decap CMS shell
+    config.yml                 # Decap CMS collections config (Log, Gallery)
 content/
   log/                       # Log posts (Markdown + frontmatter)
   gallery/                    # Gallery items (Markdown + frontmatter)
@@ -106,6 +114,17 @@ Description shown in the lightbox when the image is clicked. Markdown supported.
 
 No build step or registration needed — new posts show up on `/log` and get their own static page automatically.
 
+## Content editor (Decap CMS)
+
+`/admin` runs [Decap CMS](https://decapcms.org), configured (`public/admin/config.yml`) to manage the **Log** and **Gallery** collections directly against this GitHub repo — no separate database. Logging in there with a GitHub account that has write access lets you create, edit, and delete posts/gallery items from a browser UI; saving there commits straight to `main` and Vercel redeploys automatically, same as a normal push.
+
+It authenticates via a small self-hosted OAuth flow (`/api/auth`, `/api/callback`) since this isn't hosted on Netlify, which is what Decap's GitHub backend normally expects. It needs:
+
+- A GitHub OAuth App (Settings → Developer settings → OAuth Apps) with callback URL `https://ahmedmassoud.co/api/callback` and **"Expire user access tokens" unchecked** (this flow doesn't implement token refresh)
+- `GITHUB_OAUTH_CLIENT_ID` / `GITHUB_OAUTH_CLIENT_SECRET` set as environment variables in Vercel
+
+**Gotcha:** the domain redirects apex → `www` (`ahmedmassoud.co` → `www.ahmedmassoud.co`) on every request, so the OAuth popup ends up on the `www` origin regardless of which one it started on. `config.yml`'s `base_url` has to match that (`https://www.ahmedmassoud.co`) — Decap silently drops the login success message if the popup's actual origin doesn't match `base_url`, with no error shown to the user, only in the browser console. `/api/auth`'s `redirect_uri` is hardcoded to the non-`www` apex instead, matching what's registered on the GitHub OAuth App — Vercel's redirect handles bridging the two.
+
 ## Development
 
 ```bash
@@ -117,7 +136,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Deployment
 
-Pushes to `main` deploy automatically via Vercel. The production domain (`ahmedmassoud.co`) is registered separately and pointed at Vercel via DNS (`A` record → `76.76.21.21`, `CNAME www` → `cname.vercel-dns.com`).
+Pushes to `main` deploy automatically via Vercel. The production domain (`ahmedmassoud.co`) is registered separately and pointed at Vercel via DNS (`A` record → `76.76.21.21`, `CNAME www` → `cname.vercel-dns.com`). Vercel is configured to redirect the apex to `www` (`ahmedmassoud.co` → `www.ahmedmassoud.co`) on every request — see the Decap CMS gotcha above for the one place that redirect actually matters.
 
 ## SEO
 
