@@ -1,0 +1,45 @@
+backend:
+  name: github
+  repo: A7medRead/my-website
+  branch: main
+  base_url: https://ahmedmassoud.co
+  auth_endpoint: api/auth
+
+publish_mode: simple
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "log"
+    label: "Log"
+    folder: "content/log"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["Technical", "Field Notes", "Ideas"]
+      - { label: "Excerpt", name: "excerpt", widget: "text", hint: "Shown in the list and used as the meta description." }
+      - { label: "Tags", name: "tags", widget: "list", default: [] }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "gallery"
+    label: "Gallery"
+    folder: "content/gallery"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Image", name: "image", widget: "image", media_folder: "/public/screenshots", public_folder: "/screenshots" }
+      - { label: "Project", name: "project", widget: "string" }
+      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 1 }
+      - { label: "Description", name: "body", widget: "markdown" }
