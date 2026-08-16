@@ -22,12 +22,13 @@ export const identity = {
 };
 
 export const nav = [
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Stack" },
-  { href: "#work", label: "Work" },
-  { href: "#experience", label: "Experience" },
-  { href: "#services", label: "Services" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#about", label: "About" },
+  { href: "/#skills", label: "Stack" },
+  { href: "/#work", label: "Work" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#services", label: "Services" },
+  { href: "/log", label: "Log" },
+  { href: "/#contact", label: "Contact" },
 ] as const;
 
 export const sectionIndex = [

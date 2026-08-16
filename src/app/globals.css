@@ -101,3 +101,106 @@ body {
 .measure {
   max-width: 62ch;
 }
+
+.prose-log {
+  max-width: 68ch;
+  color: var(--color-ink);
+}
+
+.prose-log > * + * {
+  margin-top: 1.25em;
+}
+
+.prose-log p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: rgba(31, 29, 26, 0.82);
+}
+
+.prose-log h2 {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  color: var(--color-ink);
+  margin-top: 2.25em;
+}
+
+.prose-log h3 {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  line-height: 1.25;
+  color: var(--color-ink);
+  margin-top: 2em;
+}
+
+.prose-log ul,
+.prose-log ol {
+  padding-left: 1.25em;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: rgba(31, 29, 26, 0.82);
+}
+
+.prose-log ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.prose-log ul > li {
+  position: relative;
+  padding-left: 1.4em;
+}
+
+.prose-log ul > li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--color-signal);
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+.prose-log ol {
+  list-style: none;
+  counter-reset: log-ol;
+  padding-left: 0;
+}
+
+.prose-log ol > li {
+  counter-increment: log-ol;
+  position: relative;
+  padding-left: 2em;
+}
+
+.prose-log ol > li::before {
+  content: counter(log-ol, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  color: var(--color-signal);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.85em;
+}
+
+.prose-log li + li {
+  margin-top: 0.5em;
+}
+
+.prose-log strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.prose-log code {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.9em;
+  background: rgba(31, 29, 26, 0.08);
+  padding: 0.15em 0.4em;
+}
+
+.prose-log a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-signal);
+  text-underline-offset: 3px;
+}

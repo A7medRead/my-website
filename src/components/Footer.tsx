@@ -10,7 +10,7 @@ export function Footer() {
           © {year} {identity.name} — {identity.location}
         </span>
         <a
-          href="#top"
+          href="/#top"
           className="font-mono-ui text-[0.72rem] tracking-[0.1em] text-paper/40 uppercase transition-colors hover:text-signal"
         >
           Back to top ↑

@@ -37,6 +37,9 @@ src/
     icon.svg              # Favicon (terminal ">_" mark)
     opengraph-image.png   # Social share image
     robots.ts / sitemap.ts
+    log/
+      page.tsx             # Log index (list of posts)
+      [slug]/page.tsx        # Individual post, renders Markdown
   components/
     Header.tsx           # Fixed nav + mobile menu
     Hero.tsx              # Log-line intro + name/title
@@ -52,13 +55,34 @@ src/
     ScreenshotPlaceholder.tsx # Figure frame for project screenshots
   lib/
     content.ts             # All copy/content lives here (single source of truth)
+    log.ts                 # Markdown loader for the Log
 public/
   screenshots/              # Anonymized MailPilot AI product screenshots
+content/
+  log/                       # Log posts (Markdown + frontmatter)
 ```
 
 ## Content
 
 All site copy — identity, hero text, about, skills, work history, services, contact — lives in a single typed file: [`src/lib/content.ts`](src/lib/content.ts). Edit that file to change any text on the site without touching component code.
+
+### Writing a Log post
+
+Add a new `.md` file to `content/log/`, named after the URL slug (e.g. `my-post.md` → `/log/my-post`), with frontmatter:
+
+```md
+---
+title: "Post title"
+date: "2026-08-16"
+category: "Technical" # Technical | Field Notes | Ideas
+excerpt: "One or two sentences shown in the list and used as the meta description."
+tags: ["tag-one", "tag-two"]
+---
+
+Post body in Markdown.
+```
+
+No build step or registration needed — new posts show up on `/log` and get their own static page automatically.
 
 ## Development
 

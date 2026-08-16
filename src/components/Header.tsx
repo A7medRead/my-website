@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { identity, nav } from "@/lib/content";
 
 export function Header() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -24,11 +27,13 @@ export function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-40 transition-colors duration-300 ${
-        scrolled || open ? "bg-console/90 backdrop-blur-sm border-b hairline-dark" : "bg-transparent"
+        scrolled || open || !isHome
+          ? "bg-console/90 backdrop-blur-sm border-b hairline-dark"
+          : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6 lg:pl-24 lg:pr-10">
-        <a href="#top" className="flex items-center gap-2">
+        <a href="/#top" className="flex items-center gap-2">
           <svg
             width="18"
             height="18"
