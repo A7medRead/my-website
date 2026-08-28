@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Sans_Condensed, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { identity, hero } from "@/lib/content";
+import { ChatWidget } from "@/components/ChatWidget";
 
 const plexSans = IBM_Plex_Sans({
   variable: "--font-plex-sans",
@@ -90,6 +91,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         {children}
+        <ChatWidget />
       </body>
     </html>
   );
