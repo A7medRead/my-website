@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { CopyButton } from "@/components/CopyButton";
+import { ContactForm } from "@/components/ContactForm";
 import { contact, identity } from "@/lib/content";
 
 export function Contact() {
@@ -7,7 +8,7 @@ export function Contact() {
     <section id="contact" className="bg-console px-6 py-24 sm:py-32 lg:pl-24 lg:pr-10">
       <div className="mx-auto w-full max-w-[1200px]">
         <Reveal>
-          <span className="eyebrow text-wire">06 — Contact</span>
+          <span className="eyebrow text-wire">07 — Contact</span>
           <h2 className="mt-4 font-display text-display-1 font-semibold text-paper">
             {contact.heading}
           </h2>
@@ -46,6 +47,10 @@ export function Contact() {
               </div>
             ))}
           </div>
+        </Reveal>
+
+        <Reveal delay={0.16}>
+          <ContactForm />
         </Reveal>
       </div>
     </section>

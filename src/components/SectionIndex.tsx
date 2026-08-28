@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { sectionIndex } from "@/lib/content";
 
 export function SectionIndex() {
@@ -48,11 +49,15 @@ export function SectionIndex() {
             >
               {s.number}
             </span>
-            <span
-              className={`h-4 w-px transition-colors ${
-                isActive ? "bg-signal" : "bg-paper/20 group-hover:bg-paper/50"
-              }`}
-            />
+            <span className="relative h-4 w-px bg-paper/20 group-hover:bg-paper/50">
+              {isActive && (
+                <motion.span
+                  layoutId="section-index-active"
+                  className="absolute inset-0 bg-signal"
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                />
+              )}
+            </span>
           </a>
         );
       })}

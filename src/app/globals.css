@@ -48,6 +48,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+@media print {
+  body {
+    background: #fff;
+    color: var(--color-ink);
+  }
+}
+
 ::selection {
   background: var(--color-signal);
   color: var(--color-console);

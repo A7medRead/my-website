@@ -1,5 +1,9 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Reveal } from "@/components/Reveal";
 import { ScreenshotPlaceholder } from "@/components/ScreenshotPlaceholder";
+import { Counter } from "@/components/Counter";
 import { flagship, secondaryProjects } from "@/lib/content";
 
 export function SelectedWork() {
@@ -38,11 +42,11 @@ export function SelectedWork() {
             </p>
 
             <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-y hairline-light py-6 sm:grid-cols-4">
-              {flagship.metrics.map((m) => (
+              {flagship.metrics.map((m, i) => (
                 <div key={m.label}>
                   <dt className="sr-only">{m.label}</dt>
                   <dd className="font-display text-2xl font-semibold text-ink sm:text-3xl">
-                    {m.value}
+                    <Counter value={m.value} delay={i * 0.1} />
                   </dd>
                   <dd className="mt-1 font-mono-ui text-[0.7rem] tracking-[0.04em] text-ink/55">
                     {m.label}
@@ -90,7 +94,11 @@ export function SelectedWork() {
         <div className="mt-4 flex flex-col">
           {secondaryProjects.map((project, i) => (
             <Reveal key={project.name} delay={i * 0.05}>
-              <div className="grid gap-4 border-t hairline-dark py-8 last:border-b sm:grid-cols-[5rem_minmax(0,1fr)]">
+              <motion.div
+                whileHover={{ x: 6 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="grid gap-4 border-t hairline-dark py-8 last:border-b sm:grid-cols-[5rem_minmax(0,1fr)]"
+              >
                 <span className="font-mono-ui text-[0.75rem] tracking-[0.1em] text-wire">
                   LOG — {project.index}
                 </span>
@@ -105,7 +113,7 @@ export function SelectedWork() {
                     {project.spec}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             </Reveal>
           ))}
         </div>

@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
+import { AnimatePresence, motion } from "framer-motion";
 import type { GalleryItem } from "@/lib/gallery";
 
 export function GalleryLightbox({ items }: { items: GalleryItem[] }) {
@@ -66,17 +67,26 @@ export function GalleryLightbox({ items }: { items: GalleryItem[] }) {
         ))}
       </div>
 
-      {active && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label={active.title}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-console/90 p-4 backdrop-blur-sm sm:p-10"
-          onClick={close}
-        >
-          <div
+      <AnimatePresence>
+        {active && (
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label={active.title}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-console/90 p-4 backdrop-blur-sm sm:p-10"
+            onClick={close}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+          <motion.div
             className="flex max-h-full w-full max-w-[860px] flex-col border hairline-dark bg-console-2 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, y: 16, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 16, scale: 0.98 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="flex shrink-0 items-center justify-between border-b hairline-dark px-5 py-4 sm:px-8">
               <span className="font-mono-ui text-[0.7rem] tracking-[0.06em] text-paper/40">
@@ -93,16 +103,25 @@ export function GalleryLightbox({ items }: { items: GalleryItem[] }) {
             </div>
 
             <div className="overflow-y-auto px-5 py-6 sm:px-8 sm:py-8">
-              <div className="relative aspect-[16/10] w-full border hairline-dark bg-console">
-                <Image
-                  src={active.image}
-                  alt={active.title}
-                  fill
-                  className="object-cover object-top"
-                  sizes="860px"
-                  priority
-                />
-              </div>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={active.slug}
+                  className="relative aspect-[16/10] w-full border hairline-dark bg-console"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Image
+                    src={active.image}
+                    alt={active.title}
+                    fill
+                    className="object-cover object-top"
+                    sizes="860px"
+                    priority
+                  />
+                </motion.div>
+              </AnimatePresence>
 
               <div className="mt-7">
                 <div className="flex items-baseline justify-between gap-4">
@@ -139,9 +158,10 @@ export function GalleryLightbox({ items }: { items: GalleryItem[] }) {
                 </button>
               </div>
             )}
-          </div>
-        </div>
-      )}
+          </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

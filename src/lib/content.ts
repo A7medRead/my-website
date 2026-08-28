@@ -29,6 +29,7 @@ export const nav = [
   { href: "/#services", label: "Services" },
   { href: "/log", label: "Log" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/resume", label: "Resume" },
   { href: "/#contact", label: "Contact" },
 ] as const;
 
@@ -38,8 +39,15 @@ export const sectionIndex = [
   { id: "work", number: "03", label: "Work" },
   { id: "experience", number: "04", label: "Experience" },
   { id: "services", number: "05", label: "Services" },
-  { id: "contact", number: "06", label: "Contact" },
+  { id: "testimonials", number: "06", label: "Testimonials" },
+  { id: "contact", number: "07", label: "Contact" },
 ] as const;
+
+export const now = {
+  eyebrow: "Now",
+  text: "Running high-volume email operations day to day, and shipping new pieces of MailPilot AI as bottlenecks show up in the operation.",
+  updated: "Updated Aug 2026",
+};
 
 export const hero = {
   status: "STATUS: LIVE — Email Operations, UAE",
@@ -259,5 +267,6 @@ export const contact = {
   channels: [
     { label: "Email", value: identity.email, href: `mailto:${identity.email}` },
     { label: "LinkedIn", value: "/in/ahmed-reda", href: identity.linkedin },
+    { label: "Resume", value: "View / print", href: "/resume" },
   ],
 };
