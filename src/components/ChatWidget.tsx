@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
@@ -94,7 +96,13 @@ export function ChatWidget() {
                     : "mr-auto max-w-[85%] bg-console px-3 py-2 text-sm text-paper"
                 }
               >
-                {m.content}
+                {m.role === "assistant" ? (
+                  <div className="prose-chat">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.content}</ReactMarkdown>
+                  </div>
+                ) : (
+                  m.content
+                )}
               </div>
             ))}
             {sending && <div className="mr-auto text-sm text-paper/50">Typing…</div>}

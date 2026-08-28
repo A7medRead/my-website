@@ -235,3 +235,47 @@ body {
 .prose-log-dark code {
   background: rgba(237, 235, 230, 0.1);
 }
+
+.prose-chat p {
+  margin: 0;
+}
+
+.prose-chat p + p {
+  margin-top: 0.5em;
+}
+
+.prose-chat ul,
+.prose-chat ol {
+  margin: 0.4em 0;
+  padding-left: 1.2em;
+}
+
+.prose-chat ul {
+  list-style: disc;
+}
+
+.prose-chat ol {
+  list-style: decimal;
+}
+
+.prose-chat li + li {
+  margin-top: 0.15em;
+}
+
+.prose-chat strong {
+  font-weight: 600;
+  color: var(--color-paper);
+}
+
+.prose-chat code {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.9em;
+  background: rgba(237, 235, 230, 0.1);
+  padding: 0.1em 0.35em;
+}
+
+.prose-chat a {
+  color: var(--color-signal);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
