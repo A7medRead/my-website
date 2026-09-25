@@ -32,7 +32,7 @@ const plexMono = localFont({
   display: "swap",
 });
 
-const title = `${identity.name} — ${identity.title}`;
+const title = `${identity.shortName} — Email Operations & AI Automation`;
 const description = `${identity.name} is an email operations manager and AI automation builder based in Dubai, UAE. Creator of MailPilot AI, a platform for campaign, server, deliverability, and team operations.`;
 
 export const metadata: Metadata = {
