@@ -6,7 +6,7 @@ export const identity = {
   location: "UAE",
   email: "ahmedredamassoud@gmail.com",
   linkedin: "https://www.linkedin.com/in/ahmed-reda-476b0514b/",
-  siteUrl: "https://ahmedmassoud.co",
+  siteUrl: "https://www.ahmedmassoud.co",
   keywords: [
     "Ahmed Reda Sayed Massoud",
     "Ahmed Massoud",

@@ -2,7 +2,7 @@ backend:
   name: github
   repo: A7medRead/my-website
   branch: main
-  base_url: https://ahmedmassoud.co
+  base_url: https://www.ahmedmassoud.co
   auth_endpoint: api/auth
 
 publish_mode: simple

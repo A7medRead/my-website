@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
-import { identity } from "@/lib/content";
+// Must match the callback URL registered on the GitHub OAuth App. The apex
+// host 308-redirects to www, so the callback still lands on the www origin.
+const OAUTH_CALLBACK_URL = "https://ahmedmassoud.co/api/callback";
 
 export async function GET() {
   const clientId = process.env.GITHUB_OAUTH_CLIENT_ID;
@@ -7,10 +9,7 @@ export async function GET() {
     return new NextResponse("Missing GITHUB_OAUTH_CLIENT_ID", { status: 500 });
   }
 
-  // Hardcoded to the canonical (non-www) host so it always matches the
-  // callback URL registered on the GitHub OAuth App, regardless of which
-  // host variant actually served this request.
-  const redirectUri = new URL("/api/callback", identity.siteUrl).toString();
+  const redirectUri = OAUTH_CALLBACK_URL;
   const state = crypto.randomUUID();
 
   const authorizeUrl = new URL("https://github.com/login/oauth/authorize");
