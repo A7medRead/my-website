@@ -71,7 +71,7 @@ export function Hero() {
               </div>
 
               <div className="network-stage relative mx-auto mt-3 aspect-[1.18] w-full max-w-[560px]" role="img" aria-label="Animated orbital diagram showing global email operations connected to the UAE hub">
-                <div className="network-glow absolute left-1/2 top-1/2 h-[52%] w-[52%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-signal/10 blur-3xl" aria-hidden="true" />
+                <div className="network-glow absolute left-1/2 top-1/2 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(201,162,39,0.14),rgba(201,162,39,0.05)_55%,transparent)]" aria-hidden="true" />
                 <svg viewBox="0 0 500 420" className="absolute inset-0 h-full w-full" aria-hidden="true">
                   <defs>
                     <radialGradient id="core-fill"><stop offset="0" stopColor="#c9a227" stopOpacity=".22" /><stop offset="1" stopColor="#5c7b75" stopOpacity=".03" /></radialGradient>
