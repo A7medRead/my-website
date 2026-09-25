@@ -20,7 +20,6 @@ export function Hero() {
   return (
     <section id="top" className="relative isolate overflow-hidden px-6 pb-12 pt-28 sm:px-8 sm:pb-16 sm:pt-32 lg:min-h-[calc(100svh-4rem)] lg:px-12 lg:pb-12 lg:pl-24 lg:pt-32">
       <div className="hero-grid pointer-events-none absolute inset-0 -z-10 opacity-30" aria-hidden="true" />
-      <div className="pointer-events-none absolute -right-40 top-12 -z-10 h-[34rem] w-[34rem] rounded-full bg-wire/10 blur-[100px]" aria-hidden="true" />
 
       <div className="mx-auto w-full max-w-[1320px]">
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-paper/15 pb-4 sm:mb-10">
