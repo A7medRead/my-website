@@ -1,13 +1,15 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { identity } from "@/lib/content";
+import { getContent, type Locale } from "@/lib/i18n";
 
 const FORM_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID;
 
 type Status = "idle" | "sending" | "sent" | "error";
 
-export function ContactForm() {
+export function ContactForm({ locale = "en" }: { locale?: Locale }) {
+  const { identity, ui } = getContent(locale);
+  const t = ui.form;
   const [status, setStatus] = useState<Status>("idle");
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -20,7 +22,7 @@ export function ContactForm() {
       const email = data.get("email");
       const message = data.get("message");
       window.location.href = `mailto:${identity.email}?subject=${encodeURIComponent(
-        `Portfolio contact — ${name}`
+        `${t.subject} — ${name}`
       )}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${String(message ?? "")}`)}`;
       return;
     }
@@ -46,7 +48,7 @@ export function ContactForm() {
   if (status === "sent") {
     return (
       <p role="status" aria-live="polite" className="mt-6 max-w-md rounded-xl border hairline-dark bg-console-2 p-6 font-mono-ui text-sm leading-relaxed text-signal">
-        Message sent — thanks. I&apos;ll get back to you soon.
+        {t.sent}
       </p>
     );
   }
@@ -54,13 +56,13 @@ export function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="mt-6 flex max-w-md flex-col gap-5" aria-busy={status === "sending"}>
       {!FORM_ID && (
-        <p className="border-l-2 border-wire pl-4 font-mono-ui text-xs leading-relaxed text-paper/55">
-        Submitting opens your email app with the message ready to send.
+        <p className="border-s-2 border-wire ps-4 font-mono-ui text-xs leading-relaxed text-paper/55">
+        {t.mailtoNote}
         </p>
       )}
       <div className="flex flex-col gap-2">
         <label htmlFor="name" className="font-mono-ui text-[0.72rem] tracking-[0.1em] text-wire uppercase">
-          Name
+          {t.name}
         </label>
         <input
           id="name"
@@ -74,12 +76,13 @@ export function ContactForm() {
 
       <div className="flex flex-col gap-2">
         <label htmlFor="email" className="font-mono-ui text-[0.72rem] tracking-[0.1em] text-wire uppercase">
-          Email
+          {t.email}
         </label>
         <input
           id="email"
           name="email"
           type="email"
+          dir="ltr"
           autoComplete="email"
           required
           className="border hairline-dark bg-console-2 px-4 py-3 font-mono-ui text-sm text-paper outline-none transition-colors focus:border-signal"
@@ -88,7 +91,7 @@ export function ContactForm() {
 
       <div className="flex flex-col gap-2">
         <label htmlFor="message" className="font-mono-ui text-[0.72rem] tracking-[0.1em] text-wire uppercase">
-          Message
+          {t.message}
         </label>
         <textarea
           id="message"
@@ -104,12 +107,12 @@ export function ContactForm() {
         disabled={status === "sending"}
         className="self-start inline-flex min-h-12 items-center gap-4 rounded-xl border border-signal bg-signal px-6 py-3 font-mono-ui text-[0.75rem] tracking-[0.1em] text-console uppercase shadow-[0_8px_24px_rgba(201,162,39,0.1)] transition-colors hover:bg-transparent hover:text-signal disabled:opacity-50"
       >
-        {status === "sending" ? "Sending…" : "Send message"}<span aria-hidden="true">↗</span>
+        {status === "sending" ? t.sending : t.send}<span aria-hidden="true" className="flip-rtl">↗</span>
       </button>
 
       {status === "error" && (
         <p role="alert" className="font-mono-ui text-[0.75rem] text-red-400">
-          Something went wrong — email me directly at {identity.email}.
+          {t.error} <span dir="ltr">{identity.email}</span>.
         </p>
       )}
     </form>

@@ -3,15 +3,19 @@
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { getContent, type Locale } from "@/lib/i18n";
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
 const MAX_MESSAGE_LENGTH = 500;
 
+export const OPEN_CHAT_EVENT = "chat-widget:open";
+
 /** Floating visitor chat widget — answers questions from the site's own public content via
  * /api/chat. No persistence across reloads, no connection to any other system (see
  * docs decision recorded in the Madar repo: this bot must stay fully standalone). */
-export function ChatWidget() {
+export function ChatWidget({ locale = "en" }: { locale?: Locale }) {
+  const t = getContent(locale).ui.chat;
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -23,6 +27,16 @@ export function ChatWidget() {
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight });
   }, [messages, sending]);
+
+  // The command palette opens the chat through this event rather than a shared store.
+  useEffect(() => {
+    const onOpen = () => {
+      setOpen(true);
+      requestAnimationFrame(() => document.getElementById("chat-widget-input")?.focus());
+    };
+    window.addEventListener(OPEN_CHAT_EVENT, onOpen);
+    return () => window.removeEventListener(OPEN_CHAT_EVENT, onOpen);
+  }, []);
 
   function close() {
     setOpen(false);
@@ -45,23 +59,23 @@ export function ChatWidget() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.message ?? "Something went wrong.");
+        setError(data.message ?? t.genericError);
         return;
       }
       setMessages([...nextMessages, { role: "assistant", content: data.reply }]);
     } catch {
-      setError("You seem to be offline — try again in a moment.");
+      setError(t.offline);
     } finally {
       setSending(false);
     }
   }
 
   return (
-    <div className="fixed right-5 bottom-5 z-50 flex flex-col items-end gap-3">
+    <div className="fixed end-5 bottom-5 z-50 flex flex-col items-end gap-3">
       {open && (
         <div
           role="dialog"
-          aria-label="Chat with an assistant about Ahmed's work"
+          aria-label={t.dialogLabel}
           className="flex h-[28rem] w-[min(22rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-xl border hairline-dark bg-console-2 shadow-2xl"
           onKeyDown={(e) => {
             if (e.key === "Escape") close();
@@ -69,12 +83,12 @@ export function ChatWidget() {
         >
           <div className="flex items-center justify-between border-b hairline-dark px-4 py-3">
             <span className="font-mono-ui text-[0.72rem] tracking-[0.1em] text-paper/70 uppercase">
-              Ask about Ahmed
+              {t.title}
             </span>
             <button
               type="button"
               onClick={close}
-              aria-label="Close chat"
+              aria-label={t.close}
               className="font-mono-ui text-paper/50 hover:text-signal"
             >
               ✕
@@ -84,16 +98,17 @@ export function ChatWidget() {
           <div ref={listRef} aria-live="polite" className="flex-1 space-y-3 overflow-y-auto px-4 py-3">
             {messages.length === 0 && (
               <p className="text-sm text-paper/50">
-                Ask me anything about Ahmed&apos;s background, skills, or projects.
+                {t.empty}
               </p>
             )}
             {messages.map((m, i) => (
               <div
                 key={i}
+                dir="auto"
                 className={
                   m.role === "user"
-                    ? "ml-auto max-w-[85%] bg-signal px-3 py-2 text-sm text-console"
-                    : "mr-auto max-w-[85%] bg-console px-3 py-2 text-sm text-paper"
+                    ? "ms-auto max-w-[85%] bg-signal px-3 py-2 text-sm text-console"
+                    : "me-auto max-w-[85%] bg-console px-3 py-2 text-sm text-paper"
                 }
               >
                 {m.role === "assistant" ? (
@@ -105,7 +120,7 @@ export function ChatWidget() {
                 )}
               </div>
             ))}
-            {sending && <div className="mr-auto text-sm text-paper/50">Typing…</div>}
+            {sending && <div className="me-auto text-sm text-paper/50">{t.typing}</div>}
           </div>
 
           {error && (
@@ -116,7 +131,7 @@ export function ChatWidget() {
 
           <div className="flex items-center gap-2 border-t hairline-dark p-3">
             <label htmlFor="chat-widget-input" className="sr-only">
-              Your question
+              {t.inputLabel}
             </label>
             <input
               id="chat-widget-input"
@@ -124,7 +139,7 @@ export function ChatWidget() {
               value={input}
               maxLength={MAX_MESSAGE_LENGTH}
               disabled={sending}
-              placeholder="Type a question…"
+              placeholder={t.placeholder}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") void send();
@@ -137,7 +152,7 @@ export function ChatWidget() {
               disabled={sending || !input.trim()}
               className="bg-signal px-3 py-2 text-sm font-medium text-console disabled:opacity-50"
             >
-              Send
+              {t.send}
             </button>
           </div>
         </div>
@@ -148,10 +163,10 @@ export function ChatWidget() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        aria-label={open ? "Close chat" : "Open chat about Ahmed's work"}
+        aria-label={open ? t.close : t.open}
         className="border hairline-dark bg-signal px-4 py-3 font-mono-ui text-[0.72rem] tracking-[0.1em] text-console uppercase"
       >
-        {open ? "Close" : "Ask a question"}
+        {open ? t.toggleClose : t.toggleOpen}
       </button>
     </div>
   );

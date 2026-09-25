@@ -4,11 +4,15 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { nav } from "@/lib/content";
+import { getContent, homePath, type Locale } from "@/lib/i18n";
+import { openCommandPalette } from "@/components/CommandPalette";
 
-export function Header() {
+export function Header({ locale = "en" }: { locale?: Locale }) {
+  const { nav, ui } = getContent(locale);
+  const t = ui.header;
+  const home = homePath(locale);
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  const isHome = pathname === home;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -36,10 +40,10 @@ export function Header() {
     >
       <div className="mx-auto flex min-h-16 max-w-[1600px] items-center justify-between gap-4 border-x border-paper/10 px-5 sm:px-8 lg:px-10">
         <Link
-          href="/#top"
-          aria-label="Ahmed Massoud — home"
+          href={`${home}#top`}
+          aria-label={t.homeLabel}
           onClick={(event) => {
-            if (pathname !== "/") return;
+            if (pathname !== home) return;
             event.preventDefault();
             window.scrollTo({
               top: 0,
@@ -60,9 +64,9 @@ export function Header() {
           />
         </Link>
 
-        <div className="hidden min-w-[190px] border-l border-paper/15 pl-6 xl:block">
-          <p className="font-mono-ui text-xs tracking-[0.18em] text-paper/85 uppercase">Email Operations</p>
-          <p className="mt-1 font-mono-ui text-[0.58rem] tracking-[0.12em] text-paper/45 uppercase">Automation × Impact</p>
+        <div className="hidden min-w-[190px] whitespace-nowrap border-s border-paper/15 ps-6 xl:block">
+          <p className="font-mono-ui text-xs tracking-[0.18em] text-paper/85 uppercase">{t.tagline}</p>
+          <p className="mt-1 font-mono-ui text-[0.58rem] tracking-[0.12em] text-paper/45 uppercase">{t.taglineSub}</p>
         </div>
 
         <nav aria-label="Primary" className="hidden items-center gap-5 xl:flex">
@@ -77,11 +81,34 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 border-l border-paper/15 pl-5 xl:flex">
+        <div className="hidden items-center gap-3 border-s border-paper/15 ps-5 2xl:flex">
           <span className="h-2.5 w-2.5 rounded-full bg-[#9bd4a5]" aria-hidden="true" />
-          <span className="font-mono-ui text-[0.58rem] leading-relaxed text-[#b8d4ba] uppercase">Systems operational<br /><span className="text-paper/40">All channels nominal</span></span>
+          <span className="whitespace-nowrap font-mono-ui text-[0.58rem] leading-relaxed text-[#b8d4ba] uppercase">{t.status}<br /><span className="text-paper/40">{t.statusSub}</span></span>
         </div>
-        <div className="hidden border-l border-paper/15 pl-5 font-mono-ui text-[0.58rem] leading-relaxed tracking-[0.08em] text-paper/55 uppercase 2xl:block">Dubai, UAE<br />Operations / live</div>
+        <div className="hidden border-s border-paper/15 ps-5 font-mono-ui text-[0.58rem] leading-relaxed tracking-[0.08em] text-paper/55 uppercase 2xl:block">{t.location}<br />{t.locationSub}</div>
+
+        <div className="flex items-center gap-1 sm:gap-2 xl:border-s xl:border-paper/15 xl:ps-4">
+          <button
+            type="button"
+            onClick={openCommandPalette}
+            aria-label={ui.palette.trigger}
+            aria-keyshortcuts="Meta+K Control+K"
+            className="flex min-h-11 items-center gap-2 rounded-lg px-2 font-mono-ui text-[0.65rem] tracking-[0.1em] text-paper/70 uppercase transition-colors hover:text-signal"
+          >
+            <svg aria-hidden="true" viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="7" cy="7" r="4.5" /><path d="m10.5 10.5 3 3" /></svg>
+            <span className="hidden sm:inline xl:hidden 2xl:inline">{t.search}</span>
+            <kbd dir="ltr" className="hidden rounded border border-paper/20 px-1.5 py-0.5 font-mono-ui text-[0.58rem] tracking-normal text-paper/50 normal-case sm:inline">⌘K</kbd>
+          </button>
+          <a
+            href={t.languageSwitch.href}
+            hrefLang={t.languageSwitch.lang}
+            lang={t.languageSwitch.lang}
+            aria-label={t.languageSwitch.aria}
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-paper/15 px-2.5 text-[0.8rem] font-semibold text-paper/80 transition-colors hover:border-signal/60 hover:text-signal"
+          >
+            {t.languageSwitch.label}
+          </a>
+        </div>
 
         <button
           type="button"
@@ -90,7 +117,7 @@ export function Header() {
           onClick={() => setOpen((v) => !v)}
           className="flex min-h-11 items-center gap-2 font-mono-ui text-[0.7rem] tracking-[0.12em] text-paper/70 uppercase xl:hidden"
         >
-          {open ? "Close" : "Menu"}
+          {open ? t.close : t.menu}
           <span className="flex h-4 w-5 flex-col justify-between">
             <span
               className={`h-px w-full bg-current transition-transform ${open ? "translate-y-[7px] rotate-45" : ""}`}

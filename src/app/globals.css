@@ -82,7 +82,7 @@ section[id] {
   section[id]::before {
     position: absolute;
     top: 0;
-    left: 4rem;
+    inset-inline-start: 4rem;
     width: 1px;
     height: clamp(2rem, 7vh, 5rem);
     background: currentColor;
@@ -387,4 +387,75 @@ body {
   color: var(--color-signal);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* ---------- Direction ---------- */
+
+/* Directional glyphs (→ ↗) point the reading direction in RTL. */
+.flip-rtl {
+  display: inline-block;
+}
+
+[dir="rtl"] .flip-rtl {
+  transform: scaleX(-1);
+}
+
+/* ---------- Arabic edition ---------- */
+
+/* Arabic subset first so Arabic glyphs never fall to a system font; Latin text falls through
+   to the regular IBM Plex faces, keeping product names and numbers on-brand. */
+html[lang="ar"] {
+  --font-display: var(--font-plex-arabic), var(--font-plex-condensed);
+  --font-body: var(--font-plex-arabic), var(--font-plex-sans);
+  --font-mono: var(--font-plex-arabic), var(--font-plex-mono);
+}
+
+/* Stray Arabic on English pages (the language switch, the 404 note). */
+html:not([lang="ar"]) :lang(ar) {
+  font-family: var(--font-plex-arabic), var(--font-plex-sans), system-ui, sans-serif;
+}
+
+/* Tracking breaks the joins between Arabic letters. */
+html[lang="ar"] *:not(:lang(en)) {
+  letter-spacing: normal !important;
+}
+
+/* The Latin display type is set tight; Arabic needs room for ascenders and dots. */
+html[lang="ar"] :is(h1, h2, h3, h4, blockquote, .font-display):not(:lang(en)) {
+  line-height: 1.3 !important;
+}
+
+/* Arabic is unreadable at the smallest label sizes the Latin design uses. */
+html[lang="ar"] :is(.text-\[0\.55rem\], .text-\[0\.58rem\], .text-\[0\.6rem\], .text-\[0\.62rem\]):not(:lang(en)) {
+  font-size: 0.72rem;
+}
+
+html[lang="ar"] :is(.text-\[0\.65rem\], .text-\[0\.66rem\], .text-\[0\.67rem\], .text-\[0\.68rem\]):not(:lang(en)) {
+  font-size: 0.76rem;
+}
+
+html[lang="ar"] .eyebrow:not(:lang(en)) {
+  font-size: 0.82rem;
+}
+
+/* ---------- Grain ---------- */
+
+/* A fixed film of noise over the whole page, so the flat console and paper fields read as
+   material rather than screen fill. Sits under the scroll bar and dialogs. */
+body::after {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  pointer-events: none;
+  content: "";
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1.4 -0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+@media print {
+  body::after {
+    display: none;
+  }
 }

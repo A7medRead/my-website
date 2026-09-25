@@ -4,12 +4,20 @@ import { getAllLogPosts } from "@/lib/log";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllLogPosts();
+  const homeLanguages = { en: identity.siteUrl, ar: `${identity.siteUrl}/ar` };
 
   return [
     {
       url: identity.siteUrl,
       changeFrequency: "yearly",
       priority: 1,
+      alternates: { languages: homeLanguages },
+    },
+    {
+      url: `${identity.siteUrl}/ar`,
+      changeFrequency: "yearly",
+      priority: 0.9,
+      alternates: { languages: homeLanguages },
     },
     {
       url: `${identity.siteUrl}/log`,

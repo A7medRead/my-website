@@ -1,14 +1,15 @@
 import { Reveal } from "@/components/Reveal";
-import { services } from "@/lib/content";
+import { getContent, type Locale } from "@/lib/i18n";
 
-export function Services() {
+export function Services({ locale = "en" }: { locale?: Locale }) {
+  const { services, ui } = getContent(locale);
   return (
-    <section id="services" className="bg-console px-6 py-24 sm:py-32 lg:pl-24 lg:pr-10">
+    <section id="services" className="bg-console px-6 py-24 sm:py-32 lg:ps-24 lg:pe-10">
       <div className="mx-auto w-full max-w-[1200px]">
         <Reveal>
-          <span className="section-label eyebrow text-wire">LOG 05 — Services</span>
+          <span className="section-label eyebrow text-wire">{ui.sections.services}</span>
           <h2 className="mt-4 font-display text-display-1 font-semibold text-paper">
-            Ways to work together.
+            {ui.services.heading}
           </h2>
         </Reveal>
 
@@ -23,7 +24,7 @@ export function Services() {
                   <h3 className="group/title inline-flex font-display text-lg font-semibold text-paper transition-colors group-hover:text-signal sm:text-xl">
                     <span className="relative inline-block pb-1">
                       {service.title}
-                      <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 bg-signal transition-transform duration-300 ease-out group-hover/title:scale-x-100 motion-reduce:transition-none" />
+                      <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[2px] origin-left rtl:origin-right scale-x-0 bg-signal transition-transform duration-300 ease-out group-hover/title:scale-x-100 motion-reduce:transition-none" />
                     </span>
                   </h3>
                   <p className="measure mt-3 text-[0.95rem] leading-relaxed text-paper/70">

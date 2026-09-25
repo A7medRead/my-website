@@ -1,12 +1,13 @@
 import { Reveal } from "@/components/Reveal";
-import { about } from "@/lib/content";
+import { getContent, type Locale } from "@/lib/i18n";
 
-export function About() {
+export function About({ locale = "en" }: { locale?: Locale }) {
+  const { about, ui } = getContent(locale);
   return (
-    <section id="about" className="relative bg-report px-6 py-24 text-ink sm:py-32 lg:pl-24 lg:pr-10">
+    <section id="about" className="relative bg-report px-6 py-24 text-ink sm:py-32 lg:ps-24 lg:pe-10">
       <div className="mx-auto grid w-full max-w-[1200px] gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.5fr)]">
         <Reveal>
-          <span className="section-label eyebrow text-wire">LOG 01 — About</span>
+          <span className="section-label eyebrow text-wire">{ui.sections.about}</span>
         </Reveal>
 
         <div>
@@ -25,7 +26,7 @@ export function About() {
           </div>
 
           <Reveal delay={0.15}>
-            <blockquote className="measure mt-10 border-l-2 border-signal pl-5 font-display text-lg leading-snug text-ink sm:text-xl">
+            <blockquote className="measure mt-10 border-s-2 border-signal ps-5 font-display text-lg leading-snug text-ink sm:text-xl">
               {about.pullQuote}
             </blockquote>
           </Reveal>

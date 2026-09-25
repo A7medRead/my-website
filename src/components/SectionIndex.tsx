@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { sectionIndex } from "@/lib/content";
+import { getContent, type Locale } from "@/lib/i18n";
 
-export function SectionIndex() {
+export function SectionIndex({ locale = "en" }: { locale?: Locale }) {
+  const { sectionIndex } = getContent(locale);
   const [active, setActive] = useState<string>(sectionIndex[0].id);
 
   useEffect(() => {
@@ -34,12 +35,12 @@ export function SectionIndex() {
       window.removeEventListener("scroll", updateActive);
       window.removeEventListener("resize", updateActive);
     };
-  }, []);
+  }, [sectionIndex]);
 
   return (
     <nav
       aria-label="Section index"
-      className="section-index-rail fixed left-0 top-0 z-30 hidden h-full w-16 flex-col items-center justify-center gap-6 lg:flex"
+      className="section-index-rail fixed start-0 top-0 z-30 hidden h-full w-16 flex-col items-center justify-center gap-6 lg:flex"
     >
       {sectionIndex.map((s) => {
         const isActive = active === s.id;
@@ -49,6 +50,7 @@ export function SectionIndex() {
             href={`#${s.id}`}
             className="group relative z-[1] flex min-h-11 min-w-11 flex-col items-center justify-center gap-1 bg-console"
             aria-current={isActive ? "true" : undefined}
+            aria-label={`${s.number} — ${s.label}`}
           >
             <span
               className={`font-mono-ui text-[0.7rem] tracking-[0.1em] transition-colors ${

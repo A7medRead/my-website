@@ -10,11 +10,13 @@ export function ScreenshotPlaceholder({
   ratio,
   index,
   src,
+  labels = { enlarge: "Enlarge screenshot", openFull: "Open full-size screenshot", badge: "Open screenshot", close: "Close screenshot" },
 }: {
   caption: string;
   ratio: string;
   index: number;
   src?: string;
+  labels?: { enlarge: string; openFull: string; badge: string; close: string };
 }) {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -53,11 +55,11 @@ export function ScreenshotPlaceholder({
               ref={triggerRef}
               type="button"
               onClick={() => setOpen(true)}
-              aria-label={`Enlarge screenshot: ${caption}`}
+              aria-label={`${labels.enlarge}: ${caption}`}
               aria-haspopup="dialog"
               className="absolute inset-0 z-10 min-h-11 w-full cursor-zoom-in rounded-[inherit] focus-visible:outline-2 focus-visible:outline-offset-[-5px] focus-visible:outline-signal"
             >
-              <span className="sr-only">Open full-size screenshot</span>
+              <span className="sr-only">{labels.openFull}</span>
             </button>
             <Image
               src={src}
@@ -66,16 +68,16 @@ export function ScreenshotPlaceholder({
               className="object-contain object-center transition-transform duration-500 group-hover:scale-[1.015]"
               sizes="(min-width: 1024px) 560px, (min-width: 640px) 50vw, 100vw"
             />
-            <span className="pointer-events-none absolute bottom-3 right-3 z-[2] rounded-full border border-paper/20 bg-console/85 px-3 py-1.5 font-mono-ui text-[0.62rem] tracking-[0.08em] text-paper/80 uppercase opacity-0 backdrop-blur transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
-              Open screenshot ↗
+            <span className="pointer-events-none absolute bottom-3 end-3 z-[2] rounded-full border border-paper/20 bg-console/85 px-3 py-1.5 font-mono-ui text-[0.62rem] tracking-[0.08em] text-paper/80 uppercase opacity-0 backdrop-blur transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
+              {labels.badge} <span aria-hidden="true" className="flip-rtl">↗</span>
             </span>
           </>
         ) : (
           <>
-            <span className="absolute left-0 top-0 h-3 w-3 border-l border-t border-ink/40" />
-            <span className="absolute right-0 top-0 h-3 w-3 border-r border-t border-ink/40" />
-            <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-ink/40" />
-            <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-ink/40" />
+            <span className="absolute start-0 top-0 h-3 w-3 border-s border-t border-ink/40" />
+            <span className="absolute end-0 top-0 h-3 w-3 border-e border-t border-ink/40" />
+            <span className="absolute bottom-0 start-0 h-3 w-3 border-b border-s border-ink/40" />
+            <span className="absolute bottom-0 end-0 h-3 w-3 border-b border-e border-ink/40" />
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center">
               <span className="font-mono-ui text-[0.7rem] tracking-[0.14em] text-ink/50 uppercase">
                 Fig. 0{index} — image pending
@@ -97,7 +99,7 @@ export function ScreenshotPlaceholder({
           <motion.div
             role="dialog"
             aria-modal="true"
-            aria-label={`Full-size screenshot: ${caption}`}
+            aria-label={`${labels.openFull}: ${caption}`}
             className="fixed inset-0 z-[70] flex items-center justify-center bg-console/95 p-4 backdrop-blur-md sm:p-8"
             onMouseDown={(event) => {
               if (event.target === event.currentTarget) setOpen(false);
@@ -124,7 +126,7 @@ export function ScreenshotPlaceholder({
                   type="button"
                   onClick={() => setOpen(false)}
                   className="flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-lg border hairline-dark font-mono-ui text-sm text-paper/75 transition-colors hover:border-signal/50 hover:text-signal focus-visible:outline-signal"
-                  aria-label="Close screenshot"
+                  aria-label={labels.close}
                 >
                   ×
                 </button>
