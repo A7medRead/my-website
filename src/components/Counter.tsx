@@ -10,14 +10,10 @@ export function Counter({ value, delay = 0 }: { value: string; delay?: number })
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const reduce = useReducedMotion();
   const match = value.match(NUMERIC);
-  const [display, setDisplay] = useState(match ? "0" + match[2] : value);
+  const [display, setDisplay] = useState(value);
 
   useEffect(() => {
-    if (!match || !inView) return;
-    if (reduce) {
-      setDisplay(value);
-      return;
-    }
+    if (!match || !inView || reduce) return;
     const target = Number(match[1]);
     const suffix = match[2];
     const controls = animate(0, target, {

@@ -8,31 +8,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: identity.siteUrl,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "yearly",
       priority: 1,
     },
     {
       url: `${identity.siteUrl}/log`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${identity.siteUrl}/gallery`,
-      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
       url: `${identity.siteUrl}/resume`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "yearly",
       priority: 0.5,
     },
     ...posts.map((post) => ({
       url: `${identity.siteUrl}/log/${post.slug}`,
-      lastModified: new Date(post.date),
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),

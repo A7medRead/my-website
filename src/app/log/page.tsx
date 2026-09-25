@@ -10,6 +10,20 @@ export const metadata: Metadata = {
   title: "Log",
   description:
     "Notes on email deliverability, operations, AI automation, and what it actually takes to build systems that run a real business.",
+  alternates: { canonical: "/log" },
+  openGraph: {
+    title: "Operations log",
+    description: "Practical notes on email deliverability, campaign operations, AI automation, and building business systems.",
+    url: "/log",
+    type: "website",
+    images: ["/opengraph-image.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Operations log",
+    description: "Practical notes on email deliverability, campaign operations, AI automation, and building business systems.",
+    images: ["/opengraph-image.png"],
+  },
 };
 
 function formatDate(iso: string) {

@@ -62,7 +62,7 @@ export function ChatWidget() {
         <div
           role="dialog"
           aria-label="Chat with an assistant about Ahmed's work"
-          className="flex h-[28rem] w-[min(22rem,calc(100vw-2.5rem))] flex-col border hairline-dark bg-console-2"
+          className="flex h-[28rem] w-[min(22rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-xl border hairline-dark bg-console-2 shadow-2xl"
           onKeyDown={(e) => {
             if (e.key === "Escape") close();
           }}

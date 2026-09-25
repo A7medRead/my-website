@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { identity } from "@/lib/content";
 
 export function Footer() {
@@ -9,12 +10,12 @@ export function Footer() {
         <span className="font-mono-ui text-[0.72rem] tracking-[0.08em] text-paper/40">
           © {year} {identity.name} — {identity.location}
         </span>
-        <a
+        <Link
           href="/#top"
           className="font-mono-ui text-[0.72rem] tracking-[0.1em] text-paper/40 uppercase transition-colors hover:text-signal"
         >
           Back to top ↑
-        </a>
+        </Link>
       </div>
     </footer>
   );

@@ -10,6 +10,8 @@ export type GalleryItem = {
   image: string;
   project: string;
   order: number;
+  summary: string;
+  ratio: string;
   description: string;
 };
 
@@ -32,6 +34,8 @@ export function getAllGalleryItems(): GalleryItem[] {
         image: data.image as string,
         project: (data.project as string) ?? "",
         order: (data.order as number) ?? 0,
+        summary: (data.summary as string) ?? "",
+        ratio: (data.ratio as string) ?? "16 / 10",
         description: content.trim(),
       };
     })

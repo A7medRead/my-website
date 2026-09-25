@@ -19,7 +19,7 @@ export function CopyButton({ value }: { value: string }) {
     <button
       type="button"
       onClick={handleCopy}
-      className="font-mono-ui text-[0.7rem] tracking-[0.1em] text-paper/45 uppercase underline decoration-paper/25 underline-offset-4 transition-colors hover:text-signal hover:decoration-signal"
+      className="min-h-11 shrink-0 border border-paper/15 px-3 font-mono-ui text-[0.65rem] tracking-[0.1em] text-paper/60 uppercase transition-colors hover:border-signal/50 hover:bg-signal/10 hover:text-signal"
     >
       {copied ? "Copied" : "Copy"}
     </button>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144" role="img" aria-labelledby="title">
+  <title id="title">Ahmed Massoud monogram</title>
+  <rect x="4" y="4" width="136" height="136" rx="28" fill="#171a18"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M24 102 49 39l25 63M33 77h32" stroke="#d2aa39" stroke-width="6.5"/>
+    <path d="M63 102V39l25 35 25-35v63" stroke="#9bc6a4" stroke-width="6.5"/>
+    <circle cx="63" cy="77" r="4.5" fill="#edebe6" stroke="none"/>
+  </g>
+</svg>

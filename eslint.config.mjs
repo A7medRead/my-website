@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Repository-local assistant skill scripts are not application source.
+    ".claude/**",
   ]),
 ]);
 

@@ -17,10 +17,11 @@ export function ContactForm() {
 
     if (!FORM_ID) {
       const name = data.get("name");
+      const email = data.get("email");
       const message = data.get("message");
       window.location.href = `mailto:${identity.email}?subject=${encodeURIComponent(
         `Portfolio contact — ${name}`
-      )}&body=${encodeURIComponent(String(message ?? ""))}`;
+      )}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${String(message ?? "")}`)}`;
       return;
     }
 
@@ -44,14 +45,19 @@ export function ContactForm() {
 
   if (status === "sent") {
     return (
-      <p className="mt-12 max-w-md border hairline-dark bg-console-2 p-6 font-mono-ui text-sm leading-relaxed text-signal">
-        Message sent — thanks. I'll get back to you soon.
+      <p role="status" aria-live="polite" className="mt-6 max-w-md rounded-xl border hairline-dark bg-console-2 p-6 font-mono-ui text-sm leading-relaxed text-signal">
+        Message sent — thanks. I&apos;ll get back to you soon.
       </p>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-12 flex max-w-md flex-col gap-5">
+    <form onSubmit={handleSubmit} className="mt-6 flex max-w-md flex-col gap-5" aria-busy={status === "sending"}>
+      {!FORM_ID && (
+        <p className="border-l-2 border-wire pl-4 font-mono-ui text-xs leading-relaxed text-paper/55">
+        Submitting opens your email app with the message ready to send.
+        </p>
+      )}
       <div className="flex flex-col gap-2">
         <label htmlFor="name" className="font-mono-ui text-[0.72rem] tracking-[0.1em] text-wire uppercase">
           Name
@@ -60,6 +66,7 @@ export function ContactForm() {
           id="name"
           name="name"
           type="text"
+          autoComplete="name"
           required
           className="border hairline-dark bg-console-2 px-4 py-3 font-mono-ui text-sm text-paper outline-none transition-colors focus:border-signal"
         />
@@ -73,6 +80,7 @@ export function ContactForm() {
           id="email"
           name="email"
           type="email"
+          autoComplete="email"
           required
           className="border hairline-dark bg-console-2 px-4 py-3 font-mono-ui text-sm text-paper outline-none transition-colors focus:border-signal"
         />
@@ -94,13 +102,13 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "sending"}
-        className="self-start border border-signal bg-signal px-6 py-3 font-mono-ui text-[0.75rem] tracking-[0.1em] text-console uppercase transition-colors hover:bg-transparent hover:text-signal disabled:opacity-50"
+        className="self-start inline-flex min-h-12 items-center gap-4 rounded-xl border border-signal bg-signal px-6 py-3 font-mono-ui text-[0.75rem] tracking-[0.1em] text-console uppercase shadow-[0_8px_24px_rgba(201,162,39,0.1)] transition-colors hover:bg-transparent hover:text-signal disabled:opacity-50"
       >
-        {status === "sending" ? "Sending…" : "Send message"}
+        {status === "sending" ? "Sending…" : "Send message"}<span aria-hidden="true">↗</span>
       </button>
 
       {status === "error" && (
-        <p className="font-mono-ui text-[0.75rem] text-red-400">
+        <p role="alert" className="font-mono-ui text-[0.75rem] text-red-400">
           Something went wrong — email me directly at {identity.email}.
         </p>
       )}

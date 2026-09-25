@@ -7,6 +7,20 @@ import { identity, about, skillGroups, experience, flagship } from "@/lib/conten
 export const metadata: Metadata = {
   title: "Resume",
   description: `Resume for ${identity.name} — ${identity.title}.`,
+  alternates: { canonical: "/resume" },
+  openGraph: {
+    title: `${identity.name} — Resume`,
+    description: `Experience and skills of ${identity.name}, ${identity.title}, based in Dubai, UAE.`,
+    url: "/resume",
+    type: "profile",
+    images: ["/opengraph-image.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${identity.name} — Resume`,
+    description: `Experience and skills of ${identity.name}, ${identity.title}, based in Dubai, UAE.`,
+    images: ["/opengraph-image.png"],
+  },
 };
 
 export default function ResumePage() {
@@ -23,7 +37,7 @@ export default function ResumePage() {
           <PrintButton />
         </div>
 
-        <div className="mx-auto mt-10 w-full max-w-[820px] bg-report p-8 text-ink sm:p-12 print:m-0 print:max-w-none print:bg-white print:p-10 print:shadow-none">
+        <div className="mx-auto mt-10 w-full max-w-[820px] rounded-2xl bg-report p-8 text-ink sm:p-12 print:m-0 print:max-w-none print:rounded-none print:bg-white print:p-10 print:shadow-none">
           <header className="flex flex-wrap items-baseline justify-between gap-4 border-b hairline-light pb-6">
             <div>
               <h1 className="font-display text-3xl font-semibold text-ink sm:text-4xl">

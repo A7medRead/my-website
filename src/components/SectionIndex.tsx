@@ -8,30 +8,38 @@ export function SectionIndex() {
   const [active, setActive] = useState<string>(sectionIndex[0].id);
 
   useEffect(() => {
-    const elements = sectionIndex
-      .map((s) => document.getElementById(s.id))
-      .filter((el): el is HTMLElement => Boolean(el));
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible[0]) {
-          setActive(visible[0].target.id);
+    let frame = 0;
+    const updateActive = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const marker = window.innerHeight * 0.35;
+        let current: string = sectionIndex[0].id;
+        for (const section of sectionIndex) {
+          const element = document.getElementById(section.id);
+          if (element && element.getBoundingClientRect().top <= marker) {
+            current = section.id;
+          } else if (element) {
+            break;
+          }
         }
-      },
-      { rootMargin: "-10% 0px -55% 0px", threshold: 0 }
-    );
+        setActive(current);
+      });
+    };
 
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    updateActive();
+    window.addEventListener("scroll", updateActive, { passive: true });
+    window.addEventListener("resize", updateActive);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updateActive);
+      window.removeEventListener("resize", updateActive);
+    };
   }, []);
 
   return (
     <nav
       aria-label="Section index"
-      className="fixed left-0 top-0 z-30 hidden h-full w-16 flex-col items-center justify-center gap-6 lg:flex"
+      className="section-index-rail fixed left-0 top-0 z-30 hidden h-full w-16 flex-col items-center justify-center gap-6 lg:flex"
     >
       {sectionIndex.map((s) => {
         const isActive = active === s.id;
@@ -39,7 +47,7 @@ export function SectionIndex() {
           <a
             key={s.id}
             href={`#${s.id}`}
-            className="group flex flex-col items-center gap-1"
+            className="group relative z-[1] flex min-h-11 min-w-11 flex-col items-center justify-center gap-1 bg-console"
             aria-current={isActive ? "true" : undefined}
           >
             <span

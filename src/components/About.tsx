@@ -3,15 +3,15 @@ import { about } from "@/lib/content";
 
 export function About() {
   return (
-    <section id="about" className="bg-report px-6 py-24 text-ink sm:py-32 lg:pl-24 lg:pr-10">
+    <section id="about" className="relative bg-report px-6 py-24 text-ink sm:py-32 lg:pl-24 lg:pr-10">
       <div className="mx-auto grid w-full max-w-[1200px] gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.5fr)]">
         <Reveal>
-          <span className="eyebrow text-wire">01 — About</span>
+          <span className="section-label eyebrow text-wire">LOG 01 — About</span>
         </Reveal>
 
         <div>
           <Reveal>
-            <h2 className="font-display text-display-1 font-semibold text-ink">
+            <h2 className="max-w-[18ch] font-display text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[0.92] tracking-[-0.04em] text-ink">
               {about.heading}
             </h2>
           </Reveal>

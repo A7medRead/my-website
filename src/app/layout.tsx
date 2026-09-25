@@ -1,31 +1,39 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, IBM_Plex_Sans_Condensed, IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
-import { identity, hero } from "@/lib/content";
+import { identity } from "@/lib/content";
 import { ChatWidget } from "@/components/ChatWidget";
+import { ScrollProgress } from "@/components/ScrollProgress";
 
-const plexSans = IBM_Plex_Sans({
+const plexSans = localFont({
+  src: "./fonts/ibm-plex-sans-latin.woff2",
   variable: "--font-plex-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: "400 600",
+  style: "normal",
   display: "swap",
 });
 
-const plexCondensed = IBM_Plex_Sans_Condensed({
+const plexCondensed = localFont({
+  src: [
+    { path: "./fonts/ibm-plex-sans-condensed-500-latin.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/ibm-plex-sans-condensed-600-latin.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/ibm-plex-sans-condensed-700-latin.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-plex-condensed",
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
   display: "swap",
 });
 
-const plexMono = IBM_Plex_Mono({
+const plexMono = localFont({
+  src: [
+    { path: "./fonts/ibm-plex-mono-400-latin.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/ibm-plex-mono-500-latin.woff2", weight: "500", style: "normal" },
+  ],
   variable: "--font-plex-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
   display: "swap",
 });
 
 const title = `${identity.name} — ${identity.title}`;
+const description = `${identity.name} is an email operations manager and AI automation builder based in Dubai, UAE. Creator of MailPilot AI, a platform for campaign, server, deliverability, and team operations.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(identity.siteUrl),
@@ -33,7 +41,7 @@ export const metadata: Metadata = {
     default: title,
     template: `%s — ${identity.shortName}`,
   },
-  description: hero.subhead,
+  description,
   keywords: identity.keywords,
   authors: [{ name: identity.name, url: identity.siteUrl }],
   creator: identity.name,
@@ -57,26 +65,21 @@ export const metadata: Metadata = {
     url: identity.siteUrl,
     siteName: identity.shortName,
     title,
-    description: hero.subhead,
+    description,
     locale: "en_US",
+    images: [{
+      url: "/opengraph-image.png",
+      width: 1200,
+      height: 630,
+      alt: `${identity.name} — ${identity.title}`,
+    }],
   },
   twitter: {
     card: "summary_large_image",
     title,
-    description: hero.subhead,
+    description,
+    images: ["/opengraph-image.png"],
   },
-};
-
-const personJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: identity.name,
-  alternateName: identity.shortName,
-  jobTitle: identity.title,
-  url: identity.siteUrl,
-  email: `mailto:${identity.email}`,
-  sameAs: [identity.linkedin],
-  knowsAbout: identity.keywords,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -86,10 +89,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${plexSans.variable} ${plexCondensed.variable} ${plexMono.variable} h-full`}
     >
       <body className="min-h-full flex flex-col bg-console text-paper">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-        />
+        <ScrollProgress />
         {children}
         <ChatWidget />
       </body>

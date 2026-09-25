@@ -1,10 +1,119 @@
 @import "tailwindcss";
 
 :root {
+  --radius-control: 0.7rem;
   --line-on-dark: rgba(237, 235, 230, 0.12);
   --line-on-dark-strong: rgba(237, 235, 230, 0.22);
   --line-on-light: rgba(31, 29, 26, 0.14);
   --line-on-light-strong: rgba(31, 29, 26, 0.26);
+}
+
+button,
+input,
+textarea,
+select {
+  border-radius: var(--radius-control);
+}
+
+body {
+  background-image: radial-gradient(ellipse at 76% 3%, rgba(92, 123, 117, 0.09), transparent 34rem);
+}
+
+.hero-grid {
+  background-image: linear-gradient(rgba(237, 235, 230, 0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(237, 235, 230, 0.022) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(to bottom, black, transparent 92%);
+}
+
+.orbit-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: orbit-spin 36s linear infinite;
+}
+
+.route-dash {
+  animation: route-flow 12s linear infinite;
+}
+
+.core-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: core-pulse 3.2s ease-in-out infinite;
+}
+
+@keyframes orbit-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes route-flow {
+  to { stroke-dashoffset: -72; }
+}
+
+@keyframes core-pulse {
+  0%, 100% { opacity: 0.45; transform: scale(0.88); }
+  50% { opacity: 1; transform: scale(1.24); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-spin,
+  .route-dash,
+  .core-pulse {
+    animation: none;
+  }
+}
+
+section[id] {
+  position: relative;
+  scroll-margin-top: 5rem;
+}
+
+@media (min-width: 1024px) {
+  .section-index-rail::before {
+    position: absolute;
+    top: calc(50% - 10rem);
+    left: 50%;
+    height: 20rem;
+    width: 1px;
+    background: var(--line-on-dark-strong);
+    content: "";
+    transform: translateX(-50%);
+  }
+
+  section[id]::before {
+    position: absolute;
+    top: 0;
+    left: 4rem;
+    width: 1px;
+    height: clamp(2rem, 7vh, 5rem);
+    background: currentColor;
+    content: "";
+    opacity: 0.18;
+  }
+}
+
+.editorial-card {
+  transition: border-color 220ms ease, background-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .editorial-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.14);
+  }
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.section-label::before {
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  opacity: 0.7;
 }
 
 @theme {

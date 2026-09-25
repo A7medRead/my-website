@@ -7,7 +7,21 @@ import { getAllGalleryItems } from "@/lib/gallery";
 
 export const metadata: Metadata = {
   title: "Gallery",
-  description: "Screenshots from the operations systems and products built to run the business.",
+  description: "Screenshots and walkthroughs of MailPilot AI: campaign control, sending servers, deliverability, team reporting, and operational automation.",
+  alternates: { canonical: "/gallery" },
+  openGraph: {
+    title: "MailPilot AI operations gallery",
+    description: "A visual walkthrough of the campaign, infrastructure, deliverability, and reporting systems behind MailPilot AI.",
+    url: "/gallery",
+    type: "website",
+    images: ["/opengraph-image.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MailPilot AI operations gallery",
+    description: "A visual walkthrough of MailPilot AI campaign, infrastructure, deliverability, and reporting systems.",
+    images: ["/opengraph-image.png"],
+  },
 };
 
 export default function GalleryPage() {
@@ -27,9 +41,12 @@ export default function GalleryPage() {
               Screenshots from the tools and dashboards built to run the operation, with the
               context behind each one. Click any image to see it larger.
             </p>
+            <p className="mt-4 font-mono-ui text-xs leading-relaxed text-wire">
+              Names, IPs, campaign labels, and figures shown here are synthetic sample data.
+            </p>
           </Reveal>
 
-          <Reveal delay={0.08} className="mt-16">
+          <Reveal delay={0.08} className="mt-12">
             <GalleryLightbox items={items} />
           </Reveal>
         </div>

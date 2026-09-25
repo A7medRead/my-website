@@ -146,14 +146,14 @@ export const flagship = {
   ],
   figures: [
     {
-      caption: "Operations dashboard — live view",
-      ratio: "16/10",
-      src: "/screenshots/dashboard.png",
+      caption: "Operations dashboard — command overview",
+      ratio: "1686 / 940",
+      src: "/screenshots/dashboard-clean.png",
     },
     {
-      caption: "Deliverability & infrastructure monitor",
-      ratio: "16/10",
-      src: "/screenshots/pmta-test-auto.png",
+      caption: "Deliverability testing — automated run history",
+      ratio: "1688 / 898",
+      src: "/screenshots/pmta-test-auto-clean.png",
     },
   ],
   clusters: [
@@ -266,7 +266,7 @@ export const contact = {
     "Open to conversations with clients, recruiters, and collaborators — about roles, projects, or problems worth automating.",
   channels: [
     { label: "Email", value: identity.email, href: `mailto:${identity.email}` },
-    { label: "LinkedIn", value: "/in/ahmed-reda", href: identity.linkedin },
+    { label: "LinkedIn", value: "View LinkedIn profile", href: identity.linkedin },
     { label: "Resume", value: "View / print", href: "/resume" },
   ],
 };

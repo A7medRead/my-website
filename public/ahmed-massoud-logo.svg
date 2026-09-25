@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 144" role="img" aria-labelledby="title desc">
+  <title id="title">Ahmed Massoud</title>
+  <desc id="desc">Ahmed Massoud — Email Operations, Automation, Impact</desc>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 104 42 24l30 80M24 72h36" stroke="#d2aa39" stroke-width="7"/>
+    <path d="M62 104V24l31 43 31-43v80" stroke="#9bc6a4" stroke-width="7"/>
+    <circle cx="62" cy="72" r="5" fill="#edebe6" stroke="none"/>
+  </g>
+  <path d="M148 22v96" stroke="#edebe6" stroke-opacity=".2"/>
+  <text x="176" y="74" fill="#edebe6" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" letter-spacing="3.2">AHMED MASSOUD</text>
+  <circle cx="602" cy="60" r="4.5" fill="#d2aa39"/>
+  <text x="178" y="105" fill="#9bc6a4" font-family="monospace" font-size="12" font-weight="500" letter-spacing="3.1">OPERATIONS  ×  AUTOMATION  ×  IMPACT</text>
+</svg>

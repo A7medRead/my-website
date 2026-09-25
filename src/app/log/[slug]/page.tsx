@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { getAllLogPosts, getLogPost } from "@/lib/log";
+import { identity } from "@/lib/content";
 
 export function generateStaticParams() {
   return getAllLogPosts().map((post) => ({ slug: post.slug }));
@@ -22,16 +23,20 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.excerpt,
+    alternates: { canonical: `/log/${post.slug}` },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: "article",
       publishedTime: post.date,
       tags: post.tags,
+      url: `/log/${post.slug}`,
+      images: ["/opengraph-image.png"],
     },
     twitter: {
       title: post.title,
       description: post.excerpt,
+      images: ["/opengraph-image.png"],
     },
   };
 }
@@ -54,8 +59,26 @@ export default async function LogPostPage({
   const post = getLogPost(slug);
   if (!post) notFound();
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    author: { "@type": "Person", "@id": `${identity.siteUrl}/#person`, name: identity.name },
+    articleSection: post.category,
+    mainEntityOfPage: `${identity.siteUrl}/log/${post.slug}`,
+    image: `${identity.siteUrl}/opengraph-image.png`,
+    keywords: post.tags,
+    inLanguage: "en",
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
+      />
       <Header />
       <main className="bg-report px-6 pt-32 pb-24 text-ink sm:pb-32 lg:pl-24 lg:pr-10">
         <div className="mx-auto w-full max-w-[760px]">
@@ -66,13 +89,14 @@ export default async function LogPostPage({
             ← Log
           </Link>
 
-          <div className="mt-8 flex items-center gap-4">
+          <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="font-mono-ui text-[0.72rem] tracking-[0.16em] text-signal uppercase">
               {post.category}
             </span>
             <span className="font-mono-ui text-[0.72rem] text-ink/45">
               {formatDate(post.date)}
             </span>
+            <span className="font-mono-ui text-[0.72rem] text-ink/45">By {identity.name}</span>
           </div>
 
           <h1 className="mt-4 font-display text-display-1 font-semibold text-ink">
